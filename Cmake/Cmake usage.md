@@ -94,37 +94,37 @@ double power(double base, int exponent);
 * 顶层CMakeLists.txt
 
 ```
-cmake_minimum_required(VERSION 2.6)  							#表示使用的Cmake的最低版本
+cmake_minimum_required(VERSION 2.6)  #表示使用的Cmake的最低版本
 
-project(Demo7)  					 							#设置project名
-set(Demo_VERSION_MAJOR 1)										#设置主版本号
-set(Demo_VERSION_MINOR 0)										#设置副版本号
+project(Demo7)  #设置project名
+set(Demo_VERSION_MAJOR 1)	#设置主版本号
+set(Demo_VERSION_MINOR 0)	#设置副版本号
 
 configure_file(
-	"${PROJECT_SOURCE_DIR}/config.h.in"							#设置配置文件
-	"${PROJECT_BINARY_DIR}/config.h"							#config.h由config.h.in生成
+	"${PROJECT_SOURCE_DIR}/config.h.in"		#设置配置文件
+	"${PROJECT_BINARY_DIR}/config.h"		#config.h由config.h.in生成
 )
 
 option(USE_MYMATH
-	   "Use provided math implementation" ON)					#设置可选项，若为ON，则表示当前使用的是自己编写的库
+	   "Use provided math implementation" ON)	#设置可选项，若为ON，则表示当前使用的是自己编写的库
 
 if(USE_MYMATH)
-	include_directories("${PROJECT_SOURCE_DIR}/math")			#若USE_MYMATH为ON，则添加MathFunctions库
+	include_directories("${PROJECT_SOURCE_DIR}/math")#若USE_MYMATH为ON，则添加MathFunctions库
 	add_subdirectory(math)										
 	set(EXTRA_LIBS ${EXTRA_LIBS} MathFunctions)
 endif(USE_MYMATH)
 
-aux_source_directory(. DIR_SRCS)								#搜索当前目录下的所有源文件，把名字赋值给DIR_SRCS
+aux_source_directory(. DIR_SRCS)					#搜索当前目录下的所有源文件，把名字赋值给DIR_SRCS
 
-add_executable(Demo ${DIR_SRCS})								#链接源文件，生成可执行文件Demo
+add_executable(Demo ${DIR_SRCS})					#链接源文件，生成可执行文件Demo
 
-target_link_libraries(Demo ${EXTRA_LIBS})						#链接EXTRA_LIBS到Demo里
+target_link_libraries(Demo ${EXTRA_LIBS})			#链接EXTRA_LIBS到Demo里
 
-install (TARGETS Demo DESTINATION bin)							#生成makefile之后只用make install时调用
+install (TARGETS Demo DESTINATION bin)				#生成makefile之后只用make install时调用
 install (FILES "${PROJECT_BINARY_DIR}/config.h" DESTINATION include)	#用于安装程序到制定路径下
 
 
-enable_testing()												#打开调试功能，生成makefile之后使用make test调用
+enable_testing()		#打开调试功能，生成makefile之后使用make test调用
 
 # add_test(test_run Demo 5 2)
 #add_test(test_usage Demo)
@@ -136,7 +136,7 @@ enable_testing()												#打开调试功能，生成makefile之后使用make
 #add_test(test_2_10 Demo 2 10)
 #set_tests_properties(test_2_10 PROPERTIES PASS_REGULAR_EXPRESSION "is 1024")
 
-macro(do_test arg1 arg2 result)									#使用宏定义，简化测试代码编写
+macro(do_test arg1 arg2 result)				#使用宏定义，简化测试代码编写
 	add_test(test_${arg1}_${arg2} Demo ${arg1} ${arg2})
 	set_tests_properties(test_${arg1}_${arg2} PROPERTIES PASS_REGULAR_EXPRESSION ${result})
 endmacro(do_test)
@@ -145,13 +145,13 @@ do_test(10 5 "is 100000")
 do_test(2 10 "is 1024")
 
 
-set(CMAKE_BUILD_TYPE "Debug")									#使用Debug模式，添加gdb调试功能
+set(CMAKE_BUILD_TYPE "Debug")			#使用Debug模式，添加gdb调试功能
 set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb")
 set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 
-include (InstallRequiredSystemLibraries)						#用于生成安装包
-set (CPACK_RESOURCE_FILE_LICENSE								#使用cpack -C CPackConfig.cmake命令生成二进制安装包
-  "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")					#使用cpack -C CPackSourceConfig.cmake生成源码安装包
+include (InstallRequiredSystemLibraries)	#用于生成安装包
+set (CPACK_RESOURCE_FILE_LICENSE			#使用cpack -C CPackConfig.cmake命令生成二进制安装包
+  "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")		#使用cpack -C CPackSourceConfig.cmake生成源码安装包
 set (CPACK_PACKAGE_VERSION_MAJOR "${Demo_VERSION_MAJOR}")		#会在该目录下创建三个不同格式的安装包
 set (CPACK_PACKAGE_VERSION_MINOR "${Demo_VERSION_MINOR}")		#安装示例：sh Demo8-1.0.1-Linux.sh
 include (CPack)													#安装完成后会生成对应子目录，即可正常使用
@@ -164,22 +164,22 @@ aux_source_directory(. DIR_LIB_SRCS)
 
 add_library(MathFunctions ${DIR_LIB_SRCS})						
 
-install (TARGETS MathFunctions DESTINATION bin)					#make install使用
-install (FILES MathFunctions.h DESTINATION include)				#make install使用
+install (TARGETS MathFunctions DESTINATION bin)		#make install使用
+install (FILES MathFunctions.h DESTINATION include)	#make install使用
 ```
 
 * config.h.in
 
 ```
-#cmakedefine USE_MYMATH											#是否调用MathFunctions库
-#define Demo_VERSION_MAJOR @Demo_VERSION_MAJOR@					#获取版本号
+#cmakedefine USE_MYMATH			#是否调用MathFunctions库
+#define Demo_VERSION_MAJOR @Demo_VERSION_MAJOR@		#获取版本号
 #define Demo_VERSION_MINOR @Demo_VERSION_MINOR@
 ```
 
 * Licecse.txt
 
 ```
-The MIT License (MIT)											#安装时需要用到的协议= =
+The MIT License (MIT)			#安装时需要用到的协议= =
 
 Copyright (c) 2013 Joseph Pan(http://hahack.com)
 
