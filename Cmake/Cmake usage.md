@@ -154,7 +154,7 @@ set (CPACK_RESOURCE_FILE_LICENSE			#使用cpack -C CPackConfig.cmake命令生成
   "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")		#使用cpack -C CPackSourceConfig.cmake生成源码安装包
 set (CPACK_PACKAGE_VERSION_MAJOR "${Demo_VERSION_MAJOR}")		#会在该目录下创建三个不同格式的安装包
 set (CPACK_PACKAGE_VERSION_MINOR "${Demo_VERSION_MINOR}")		#安装示例：sh Demo8-1.0.1-Linux.sh
-include (CPack)													#安装完成后会生成对应子目录，即可正常使用
+include (CPack)			#安装完成后会生成对应子目录，即可正常使用
 ```
 
 * math子目录下CMakeLists.txt
