@@ -114,13 +114,13 @@ if(USE_MYMATH)
 	set(EXTRA_LIBS ${EXTRA_LIBS} MathFunctions)
 endif(USE_MYMATH)
 
-aux_source_directory(. DIR_SRCS)					#搜索当前目录下的所有源文件，把名字赋值给DIR_SRCS
+aux_source_directory(. DIR_SRCS)	#搜索当前目录下的所有源文件，把名字赋值给DIR_SRCS
 
-add_executable(Demo ${DIR_SRCS})					#链接源文件，生成可执行文件Demo
+add_executable(Demo ${DIR_SRCS})	#链接源文件，生成可执行文件Demo
 
-target_link_libraries(Demo ${EXTRA_LIBS})			#链接EXTRA_LIBS到Demo里
+target_link_libraries(Demo ${EXTRA_LIBS})	#链接EXTRA_LIBS到Demo里
 
-install (TARGETS Demo DESTINATION bin)				#生成makefile之后只用make install时调用
+install (TARGETS Demo DESTINATION bin)		#生成makefile之后只用make install时调用
 install (FILES "${PROJECT_BINARY_DIR}/config.h" DESTINATION include)	#用于安装程序到制定路径下
 
 
